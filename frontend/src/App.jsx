@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from 'react'
 import './index.css'
 import ChatMessage from './components/ChatMessage'
 import ChartRenderer from './components/ChartRenderer'
+import Login from './components/Login'
 
 const API_BASE = 'https://api.insight-ai.xbytedev.co'
 
@@ -15,6 +16,9 @@ function App() {
   const [suggestions, setSuggestions] = useState([])
   const [healthStatus, setHealthStatus] = useState(null)
   const [sessionId] = useState(() => 'session_' + Date.now())
+  const [isLoggedIn, setIsLoggedIn] = useState(() => {
+    return localStorage.getItem('isLoggedIn') === 'true'
+  })
   const messagesEndRef = useRef(null)
   const inputRef = useRef(null)
 
@@ -117,6 +121,20 @@ function App() {
     }
   }
 
+  function handleLogin() {
+    setIsLoggedIn(true)
+    localStorage.setItem('isLoggedIn', 'true')
+  }
+
+  function handleLogout() {
+    setIsLoggedIn(false)
+    localStorage.removeItem('isLoggedIn')
+  }
+
+  if (!isLoggedIn) {
+    return <Login onLogin={handleLogin} />
+  }
+
   const isOnline = healthStatus?.status === 'ok'
 
   return (
@@ -143,6 +161,10 @@ function App() {
                 <div className="status-ping"></div>
                 <span>{isOnline ? 'System Online' : 'System Offline'}</span>
               </div>
+              <button className="logout-button" onClick={handleLogout} title="Sign Out">
+                <span>Logout</span>
+                <span>🚪</span>
+              </button>
             </div>
           )}
         </div>
