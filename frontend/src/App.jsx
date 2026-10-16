@@ -183,7 +183,7 @@ function App() {
               {messages.map((msg, i) => (
                 <ChatMessage key={i} message={msg} />
               ))}
-              
+
               {isLoading && (
                 <div className={`loading-indicator ${messages.length === 0 ? 'centered' : ''}`}>
                   <div className="loading-avatar">⚡</div>
@@ -254,7 +254,7 @@ function WelcomeScreen({ suggestions, onSuggestionClick }) {
         <div className="welcome-icon-large">✧</div>
         <h2 className="welcome-title">Welcome to X-Byte AI</h2>
         <p className="welcome-desc">
-          Your intelligent data assistant. Ask questions about grocery pricing, products, 
+          Your intelligent data assistant. Ask questions about grocery pricing, products,
           retailers, and trends in plain English to get instant insights.
         </p>
       </div>
